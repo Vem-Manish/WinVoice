@@ -14,7 +14,7 @@
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/WinVoice.git](https://github.com/YOUR_USERNAME/WinVoice.git)
+    git clone [https://github.com/Vem-Manish/WinVoice](https://github.com/Vem-Manish/WinVoice.git)
     cd WinVoice
     ```
 
