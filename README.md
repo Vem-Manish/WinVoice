@@ -2,8 +2,6 @@
 
 **WinVoice** is a professional, background-running desktop automation agent for Windows. It allows you to control your apps, browse the web, and execute complex multi-step workflows using natural voice commands.
 
-![App Screenshot](https://via.placeholder.com/800x400?text=WinVoice+UI)
-
 ## ⚡ Features
 * **Invisible & Fast:** Runs silently in the system tray.
 * **Global Hotkey:** Summon instantly with `Ctrl + Space`.
