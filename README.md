@@ -19,7 +19,7 @@
 
 2.  **Clone the repository**
     ```bash
-    git clone [https://github.com/Vem-Manish/WinVoice.git](https://github.com/Vem-Manish/WinVoice.git)
+    git clone https://github.com/Vem-Manish/WinVoice.git
     ```
 
 3.  **Run the Installer**
