@@ -1,11 +1,12 @@
 import sys
 import os
 import subprocess
+import ctypes  # Added for taskbar icon fix
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                                QHBoxLayout, QLabel, QPushButton, QStackedWidget,
                                QProgressBar, QLineEdit, QMessageBox)
 from PySide6.QtCore import Qt, QThread, Signal, QTimer
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon  # <--- FIXED: Added QIcon here
 
 # --- CONFIGURATION ---
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
@@ -21,6 +22,7 @@ class InstallWorker(QThread):
     finished_signal = Signal()
 
     def run(self):
+        # Added pyautogui and pyperclip here as well
         packages = [
             "google-genai", "python-dotenv", "SpeechRecognition",
             "pyttsx3", "pyaudio", "keyboard", "winshell", "pywin32",
@@ -54,7 +56,7 @@ class ApiTestWorker(QThread):
 
             client = genai.Client(api_key=self.api_key)
 
-            # --- CORRECTED MODEL ---
+            # Using the correct model as requested
             response = client.models.generate_content(
                 model="gemma-3-4b-it",
                 contents="Say hi"
@@ -249,6 +251,7 @@ class InstallerWindow(QMainWindow):
 
             project_dir = os.path.dirname(os.path.abspath(__file__))
             python_exe = sys.executable
+            # Using pythonw to ensure it runs silently
             pythonw_exe = python_exe.replace("python.exe", "pythonw.exe")
 
             script_path = os.path.join(project_dir, "gui.py")
@@ -292,20 +295,19 @@ class InstallerWindow(QMainWindow):
         self.central_widget.addWidget(page)
 
     def launch_agent(self):
+        # We use pythonw to launch it silently (no console)
         subprocess.Popen([sys.executable.replace("python.exe", "pythonw.exe"), "gui.py"])
         self.close()
 
 
 if __name__ == "__main__":
-    import ctypes
-
-    # Windows Taskbar Fix
+    # Windows Taskbar Icon Fix
     myappid = 'mycompany.winvoice.installer.v1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     app = QApplication(sys.argv)
 
-    # Set Icon
+    # Set the Icon for the Installer Window
     icon_path = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
     if os.path.exists(icon_path):
         app.setWindowIcon(QIcon(icon_path))
