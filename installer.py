@@ -23,7 +23,8 @@ class InstallWorker(QThread):
     def run(self):
         packages = [
             "google-genai", "python-dotenv", "SpeechRecognition",
-            "pyttsx3", "pyaudio", "keyboard", "winshell", "pywin32"
+            "pyttsx3", "pyaudio", "keyboard", "winshell", "pywin32",
+            "pyautogui", "pyperclip"
         ]
 
         total = len(packages)
