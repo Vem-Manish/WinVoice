@@ -298,8 +298,29 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
+    # 1. WINDOWS TASKBAR ICON FIX
+    # This tells Windows: "I am a unique app, not just python.exe"
+    import ctypes
+    import os
+
+    myappid = 'mycompany.winvoice.agent.v1'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     app = QApplication(sys.argv)
+
+    # 2. SET THE GLOBAL APP ICON
+    # This applies the icon to the Taskbar and the Window Title Bar
+    icon_path = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
+    if os.path.exists(icon_path):
+        app.setWindowIcon(QIcon(icon_path))
+
     app.setQuitOnLastWindowClosed(False)
+
     window = MainWindow()
+
+    # Optional: Set the icon for the Window specifically just in case
+    if os.path.exists(icon_path):
+        window.setWindowIcon(QIcon(icon_path))
+
     print("🚀 Agent running in background. Press Ctrl+Space to open.")
     sys.exit(app.exec())

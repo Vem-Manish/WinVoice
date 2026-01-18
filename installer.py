@@ -297,7 +297,19 @@ class InstallerWindow(QMainWindow):
 
 
 if __name__ == "__main__":
+    import ctypes
+
+    # Windows Taskbar Fix
+    myappid = 'mycompany.winvoice.installer.v1'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     app = QApplication(sys.argv)
+
+    # Set Icon
+    icon_path = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
+    if os.path.exists(icon_path):
+        app.setWindowIcon(QIcon(icon_path))
+
     window = InstallerWindow()
     window.show()
     sys.exit(app.exec())
