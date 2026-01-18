@@ -8,7 +8,6 @@ from PySide6.QtCore import Qt, QThread, Signal, QTimer
 from PySide6.QtGui import QPixmap
 
 # --- CONFIGURATION ---
-# Ensure you have a folder named 'assets' with these images!
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 TUTORIAL_IMAGES = [
     "step1.png", "step2.png", "step3.png",
@@ -22,8 +21,6 @@ class InstallWorker(QThread):
     finished_signal = Signal()
 
     def run(self):
-        # We install dependencies here.
-        # Note: We install winshell/pywin32 now so they are available later.
         packages = [
             "google-genai", "python-dotenv", "SpeechRecognition",
             "pyttsx3", "pyaudio", "keyboard", "winshell", "pywin32"
@@ -52,12 +49,13 @@ class ApiTestWorker(QThread):
 
     def run(self):
         try:
-            # Import inside thread to ensure library exists
             from google import genai
 
             client = genai.Client(api_key=self.api_key)
+
+            # --- CORRECTED MODEL ---
             response = client.models.generate_content(
-                model="gemma-2-9b-it",
+                model="gemma-3-4b-it",
                 contents="Say hi"
             )
             if response.text:
@@ -238,33 +236,31 @@ class InstallerWindow(QMainWindow):
             with open(".env", "w") as f:
                 f.write(f"GOOGLE_API_KEY={self.api_input.text().strip()}")
 
-            # CALL THE INTERNAL STARTUP FUNCTION
             self.create_startup_shortcut()
-
             self.central_widget.setCurrentIndex(3)
         else:
             QMessageBox.critical(self, "Validation Failed", f"Invalid API Key.\nError: {message}")
 
-    # --- INTERNAL STARTUP LOGIC (No extra file needed) ---
     def create_startup_shortcut(self):
         try:
-            # We import here because they were JUST installed
             import winshell
             from win32com.client import Dispatch
 
             project_dir = os.path.dirname(os.path.abspath(__file__))
             python_exe = sys.executable
+            pythonw_exe = python_exe.replace("python.exe", "pythonw.exe")
+
             script_path = os.path.join(project_dir, "gui.py")
             startup_folder = winshell.startup()
-            shortcut_path = os.path.join(startup_folder, "JarvisAgent.lnk")
+            shortcut_path = os.path.join(startup_folder, "WinVoice.lnk")
 
             shell = Dispatch('WScript.Shell')
             shortcut = shell.CreateShortCut(shortcut_path)
-            shortcut.Targetpath = python_exe
+            shortcut.Targetpath = pythonw_exe
             shortcut.Arguments = f'"{script_path}"'
             shortcut.WorkingDirectory = project_dir
             shortcut.IconLocation = python_exe
-            shortcut.Description = "AI Desktop Agent"
+            shortcut.Description = "WinVoice AI Agent"
             shortcut.save()
             print("Shortcut created successfully.")
 
@@ -280,12 +276,12 @@ class InstallerWindow(QMainWindow):
         lbl.setStyleSheet("font-size: 28px; font-weight: bold; color: #4CAF50;")
         layout.addWidget(lbl, alignment=Qt.AlignCenter)
 
-        sub = QLabel("The Agent has been added to startup.\nClick below to run it now.")
+        sub = QLabel("WinVoice has been added to startup.\nClick below to run it now.")
         sub.setAlignment(Qt.AlignCenter)
         sub.setStyleSheet("font-size: 16px; color: #CCC; margin: 20px;")
         layout.addWidget(sub, alignment=Qt.AlignCenter)
 
-        run_btn = QPushButton("Run Agent")
+        run_btn = QPushButton("Run WinVoice")
         run_btn.setFixedSize(200, 60)
         run_btn.setStyleSheet(
             "background-color: #4CAF50; color: white; font-weight: bold; font-size: 18px; border-radius: 30px;")
@@ -295,7 +291,6 @@ class InstallerWindow(QMainWindow):
         self.central_widget.addWidget(page)
 
     def launch_agent(self):
-        # We use pythonw to launch it silently (no console)
         subprocess.Popen([sys.executable.replace("python.exe", "pythonw.exe"), "gui.py"])
         self.close()
 
