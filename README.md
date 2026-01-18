@@ -2,6 +2,7 @@
 
 **WinVoice** is a professional, background-running desktop automation agent for Windows. It allows you to control your apps, browse the web, and execute complex multi-step workflows using natural voice commands.
 
+![App Screenshot](https://via.placeholder.com/800x400?text=WinVoice+UI)
 
 ## ⚡ Features
 * **Invisible & Fast:** Runs silently in the system tray.
@@ -12,17 +13,23 @@
 
 ## 🚀 Installation
 
-1.  **Clone the repository**
+1.  **Prepare Directory**
+    Open Command Prompt (cmd) or PowerShell and navigate to the folder where you want to install WinVoice.
     ```bash
-    git clone [https://github.com/Vem-Manish/WinVoice](https://github.com/Vem-Manish/WinVoice.git)
+    cd Documents  # (Example: You can use any folder you like)
+    ```
+
+2.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Vem-Manish/WinVoice.git
     cd WinVoice
     ```
 
-2.  **Run the Installer**
+3.  **Run the Installer**
     Double-click **`setup.bat`**.
     * This will install the engine, guide you through getting a free Gemini API Key, and set up auto-start.
 
-3.  **That's it!**
+4.  **That's it!**
     WinVoice is now running. Check your system tray (bottom right).
 
 ## 🎮 Usage
