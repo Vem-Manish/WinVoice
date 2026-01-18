@@ -19,11 +19,11 @@
 
 2.  **Clone the repository**
     ```bash
-    git clone https://github.com/Vem-Manish/WinVoice.git
-    cd WinVoice
+    git clone [https://github.com/Vem-Manish/WinVoice.git](https://github.com/Vem-Manish/WinVoice.git)
     ```
 
 3.  **Run the Installer**
+    Open the new `WinVoice` folder in your **File Explorer**.
     Double-click **`setup.bat`**.
     * This will install the engine, guide you through getting a free Gemini API Key, and set up auto-start.
 
