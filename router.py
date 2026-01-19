@@ -45,7 +45,7 @@ SMART SEARCH GUIDE (Use these patterns!):
 - YouTube Search: "https://www.youtube.com/results?search_query=YOUR+QUERY"
 - Google Search: "https://www.google.com/search?q=YOUR+QUERY"
 - Amazon Search: "https://www.amazon.in/s?k=YOUR+QUERY"
-- Spotify Search: "https://open.spotify.com/search/YOUR+QUERY"
+- Spotify Search: "https://open.spotify.com/search/YOUR%20QUERY"
 
 BEHAVIORAL GUIDELINES:
 - **Screenshots:** ALWAYS use ["win", "printscreen"] to SAVE the screenshot. Never use just "printscreen".
